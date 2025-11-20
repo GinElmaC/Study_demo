@@ -1,13 +1,13 @@
 package everyDay;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Code {
     public static void main(String[] args) {
-        String s = "101";
-        int i = maxOperations(s);
-        System.out.println(i);
+        int[][] nums = new int[][]{{1,3},{3,7},{8,9}};
+        intersectionSizeTwo(nums);
     }
     public static int minOperations(int[] nums) {
         List<Integer> s = new ArrayList<>();
@@ -76,6 +76,38 @@ public class Code {
             }else{
                 i++;
             }
+        }
+    }
+    //leetcode757，先按照左侧排序，然后贪心取就可以了
+    public static int intersectionSizeTwo(int[][] intervals) {
+        int n = intervals.length;
+        int res = 0;
+        int m = 2;
+        Arrays.sort(intervals, (a, b) -> {
+            if (a[0] == b[0]) {
+                return b[1] - a[1];
+            }
+            return a[0] - b[0];
+        });
+        List<Integer>[] temp = new List[n];
+        for (int i = 0; i < n; i++) {
+            temp[i] = new ArrayList<Integer>();
+        }
+        for (int i = n - 1; i >= 0; i--) {
+            for (int j = intervals[i][0], k = temp[i].size(); k < m; j++, k++) {
+                res++;
+                help(intervals, temp, i - 1, j);
+            }
+        }
+        return res;
+    }
+
+    public static void help(int[][] intervals, List<Integer>[] temp, int pos, int num) {
+        for (int i = pos; i >= 0; i--) {
+            if (intervals[i][1] < num) {
+                break;
+            }
+            temp[i].add(num);
         }
     }
 }
