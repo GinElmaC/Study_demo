@@ -1,11 +1,11 @@
 package everyDay;
 
+import java.math.BigInteger;
 import java.util.*;
 
 public class Code {
     public static void main(String[] args) {
-        int[][] nums = new int[][]{{1,3},{1,4},{2,5},{3,5}};
-        intersectionSizeTwo(nums);
+        System.out.println(smallestRepunitDivByK(23));
     }
     public static int minOperations(int[] nums) {
         List<Integer> s = new ArrayList<>();
@@ -138,5 +138,27 @@ public class Code {
         }
         return ans;
     }
-
+    //leetcode101，思路：对于余数只会出现0到k-1的情况，如果出现循环，直接退出即可。关于处于1组成数字的余数计算公式为yu = (yu*10+1)%k
+    public static int smallestRepunitDivByK(int k) {
+        if(k % 2 == 0){
+            return -1;
+        }
+        Set<Long> yu = new HashSet<>();
+        int l = 1;
+        long num = 1;
+        long now = 1;
+        for(int i = 0;i<k;i++){
+            if(num%k == 0){
+                return l;
+            }
+            if(yu.contains(num%k)){
+                return -1;
+            }
+            yu.add(num%k);
+            now*=10;
+            num+=now;
+            l++;
+        }
+        return -1;
+    }
 }
