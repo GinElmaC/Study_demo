@@ -6,6 +6,7 @@ import java.util.*;
 public class Code {
     public static void main(String[] args) {
         System.out.println(smallestRepunitDivByK(23));
+        System.out.println(Integer.MAX_VALUE);
     }
     public static int minOperations(int[] nums) {
         List<Integer> s = new ArrayList<>();
